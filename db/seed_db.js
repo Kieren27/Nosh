@@ -75,3 +75,7 @@ async function buildTables() {
 buildTables()
   .catch(console.error)
   .finally(() => client.end());
+
+module.exports = {
+  buildTables
+}
