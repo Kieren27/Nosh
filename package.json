@@ -7,7 +7,12 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "npm test"
+      "seed:dev": "nodemon ./db/seed.js",
+      "seed": "node ./db/seed.js",
+      "start:dev": "nodemon server.js",
+      "start": "node server.js",
+      "test": "jest --runInBand",
+      "test:watch": "jest --runInBand --watchAll"
   },
   "repository": {
     "type": "git",
