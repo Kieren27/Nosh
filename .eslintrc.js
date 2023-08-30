@@ -28,6 +28,6 @@ module.exports = {
         "react"
     ],
     "rules": {
-        "no-undef": true;
+        "no-undef": 1
     }
 }
