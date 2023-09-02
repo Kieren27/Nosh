@@ -18,7 +18,18 @@ async function createPost({userId, restaurantId, post}){
 }
 
 async function getAllPosts(){
-    return ''
+    try {
+        const{rows: allPosts} = await client.query(
+            `
+            SELECT *
+            FROM posts;
+            `
+        )
+        return allPosts;
+
+    } catch(error){
+        console.log(error)
+    }
 }
 
 async function getPostsByFriends(){
