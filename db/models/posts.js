@@ -1,7 +1,7 @@
 
 const client = require('../client');
 
-async function createPost(){
+async function createPost({u}){
     return ''
 }
 

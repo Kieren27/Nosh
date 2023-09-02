@@ -1,4 +1,6 @@
 
+require("dotenv").config();
+
 const client = require('../../db/client');
 
 const {
@@ -14,7 +16,20 @@ const {
 describe('createPost', () => {
     it('is a function', () => {
         expect(typeof createPost()).toBe('function')
-    })
+    });
+
+    it('Creates and returns new activity', async() => {
+        const postToCreate = {
+            userId: '1',
+            restaurantId: '1',
+            date_created: '09-02-2023',
+            post: 'Went to Applebees today. Truly a phenomenal experience. Make sure to try their mashed potatos!'
+        }
+
+        const createdPost = await createPost(postToCreate);
+        expect(createdPost.restaurantId).toBe(postToCreate.restaurantId);
+        expect(createdPost.post).toBe(postToCreate.post)
+    });
 })
 
 describe('getAllPosts', () => {
