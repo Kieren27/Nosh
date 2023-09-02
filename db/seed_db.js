@@ -66,15 +66,18 @@ async function buildTables() {
         pending BOOLEAN NOT NULL
       );
     `);
+
+    client.end();
   }
   catch (error) {
     console.error(error);
   }
 }
 
-buildTables()
-  .catch(console.error)
-  .finally(() => client.end());
+// commented out to solve multiple client connect error during tests
+// buildTables()
+//   .catch(console.error)
+//   .finally(() => client.end());
 
 module.exports = {
   buildTables
