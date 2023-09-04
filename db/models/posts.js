@@ -108,12 +108,28 @@ async function getPostById({id}){
     }
 }
 
-async function getPostsByUser(){
-    return ''
-}
 
-async function updatePost(){
-    return ''
+async function updatePost({id, ...fields}){
+    const setString = Object.keys(fields)
+    .map((key, idx) => `${key} = $${idx + 1}`)
+    .join(", ");
+
+    if (setString.length === 0){
+        return;
+    }
+
+    try {
+        const {rows: [post]} = await client.query(`
+        UPDATE posts
+        SET ${setString}
+        WHERE id=$1
+        RETURNING *;
+        `, [id, ...Object.values(fields)]);
+
+        return review;
+    } catch (error){
+        console.error(error);
+    }
 }
 
 async function deletePost(){
