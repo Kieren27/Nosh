@@ -32,7 +32,7 @@ async function getAllPosts(){
     }
 }
 
-async function getPostsByUser({userId}){
+async function getPostsByUser(userId){
     try {
         const {rows: userPosts} = await client.query(`
         SELECT *
@@ -45,7 +45,7 @@ async function getPostsByUser({userId}){
     }
 }
 
-async function getPostsByFriends({userId}){
+async function getPostsByFriends(userId){
     try {
         const {rows: friends } = await client.query(`
         SELECT *
@@ -78,7 +78,7 @@ async function getPostsByFriends({userId}){
     
 }
 
-async function getPostsByRestaurant({restaurantId}){
+async function getPostsByRestaurant(restaurantId){
     try{
         const {rows:posts} = await client.query(`
         SELECT *
@@ -92,7 +92,7 @@ async function getPostsByRestaurant({restaurantId}){
     }
 }
 
-async function getPostById({id}){
+async function getPostById(id){
     try{
 
         const {rows: {post}} = await client.query(`
@@ -126,14 +126,26 @@ async function updatePost({id, ...fields}){
         RETURNING *;
         `, [id, ...Object.values(fields)]);
 
-        return review;
+        return post;
     } catch (error){
         console.error(error);
     }
 }
 
-async function deletePost(){
-    return ''
+async function deletePost(postId){
+    try {
+
+        const {rows: [response]} = await client.query(`
+        DELETE posts
+        WHERE id=$1
+        RETURNING *;
+        `, [postId])
+
+        return response;
+
+    } catch(error){
+        console.log(error)
+    }
 }
 
 
