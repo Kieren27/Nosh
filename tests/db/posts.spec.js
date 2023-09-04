@@ -10,6 +10,7 @@ const {
     getPostsByRestaurant,
     getPostById,
     updatePost,
+    getPostsByUser,
     deletePost
 } = require('../../db')
 
@@ -35,6 +36,12 @@ describe('createPost', () => {
 describe('getAllPosts', () => {
     it('is a function', () => {
         expect(typeof getAllPosts()).toBe('function')
+    })
+})
+
+describe('getPostsByUser', () => {
+    it('is a function', () => {
+        expect(typeof getPostsByUser()).toBe('function')
     })
 })
 
