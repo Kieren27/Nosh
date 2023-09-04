@@ -72,12 +72,24 @@ async function getPostsByFriends({userId}){
         })
 
         return friendPosts;
+    } catch(error){
+        console.log(error)
     }
     
 }
 
-async function getPostsByRestaurant(){
-    return ''
+async function getPostsByRestaurant({restaurantId}){
+    try{
+        const {rows:posts} = await client.query(`
+        SELECT *
+        FROM posts
+        WHERE "restaurantId"=$1;
+        `, [restaurantId])
+
+        return posts;
+    } catch(error){
+        console.log(error)
+    }
 }
 
 async function getPostById(){
