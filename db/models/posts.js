@@ -92,8 +92,20 @@ async function getPostsByRestaurant({restaurantId}){
     }
 }
 
-async function getPostById(){
-    return ''
+async function getPostById({id}){
+    try{
+
+        const {rows: {post}} = await client.query(`
+        SELECT *
+        FROM posts
+        WHERE id=$1;
+        `,[id])
+
+        return post;
+
+    } catch (error){
+        console.log(error)
+    }
 }
 
 async function getPostsByUser(){
