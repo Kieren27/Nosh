@@ -9,4 +9,13 @@ describe('Database', () => {
   afterAll(async() => {
     client.end();
   })
+
+  describe('createRestaurant', () => {
+    it('returns an object', async () => {
+      const res = await createRestaurant();
+      expect(typeof res === 'object' &&
+        !Array.isArray(res) &&
+        res !== null).toBe(true);
+    })
+  })
 })
