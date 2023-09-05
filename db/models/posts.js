@@ -12,6 +12,8 @@ async function createPost({userId, restaurantId, post}){
         VALUES ($1, $2, $3, $4)
         RETURNING *;
         `, [userId, restaurantId, post, date])
+
+        return posts;
    } catch (error){
         console.log(error)
    }
