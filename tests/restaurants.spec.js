@@ -10,7 +10,7 @@ describe('Database', () => {
     client.end();
   })
 
-  describe('createRestuarant', () => {
+  describe('createRestaurant', () => {
     it('returns an object', async () => {
       const res = await createRestaurant();
       expect(typeof res === 'object' &&
