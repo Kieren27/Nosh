@@ -1,7 +1,7 @@
-const client = require('../db/client');
+const client = require('./client');
 
 async function createUser() {
-
+    
 }
 
 async function getUser() {
@@ -9,7 +9,7 @@ async function getUser() {
 }
 
 async function getAllUsers() {
-
+   
 }
 
 async function getUserById() {
