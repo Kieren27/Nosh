@@ -22,57 +22,73 @@ describe('Database', () => {
 
     describe('createUser', () => {
         it('returns an object', async () => {
-            const res = await createUser();
-            expect(typeof res).toBe('object');
+            const user = await createUser();
+            expect(typeof user === 'object' &&
+            !Array.isArray(user) &&
+            user !== null).toBe(true);
         })
     })
 
     describe('getUser', () => {
         it('returns an object', async () => {
-            const res = await getUser();
-            expect(typeof res).toBe('object');
+            const user = await getUser();
+            expect(typeof user === 'object' &&
+            !Array.isArray(user) &&
+            user !== null).toBe(true);
         })
     })
 
     describe('getAllUsers', () => {
         it('returns an array', async () => {
-            const res = await getAllUsers();
-            expect(typeof res).toBe('array');
+            const AllUsers = await getAllUsers();
+            expect(typeof AllUsers === 'object' &&
+            Array.isArray(AllUsers) &&
+            AllUsers !== null).toBe(true);
         })
     })
 
     describe('getUserById', () => {
         it('returns an object', async () => {
-            const res = await getUserById();
-            expect(typeof res).toBe('object');
+            const user = await getUserById();
+            expect(typeof user === 'object' &&
+            !Array.isArray(user) &&
+            user !== null).toBe(true);
         })
     })
 
     describe('getUserByUsername', () => {
         it('returns an object', async () => {
-            const res = await getUserByUsername();
-            expect(typeof res).toBe('object');
+            const user = await getUserByUsername();
+            expect(typeof user === 'object' &&
+            !Array.isArray(user) &&
+            user !== null).toBe(true);
         })
     })
 
     describe('getUserByEmail', () => {
         it('returns an object', async () => {
-            const res = await getUserByEmail();
-            expect(typeof res).toBe('object');
+            const user = await getUserByEmail();
+            expect(typeof user === 'object' &&
+            !Array.isArray(user) &&
+            user !== null).toBe(true);
         })
     })
 
     describe('updateUser', () => {
         it('returns an object', async () => {
-            const res = await updateUser();
-            expect(typeof res).toBe('object');
+            const user = await updateUser();
+            expect(typeof user === 'object' &&
+            !Array.isArray(user) &&
+            user !== null).toBe(true);
         })
     })
 
     describe('deleteUser', () => {
         it('returns an object', async () => {
-            const res = await deleteUser();
-            expect(typeof res).toBe('object');
+            const user = await deleteUser();
+            expect(typeof user === 'object' &&
+            !Array.isArray(user) &&
+            user !== null).toBe(true);
         })
     })
 })
