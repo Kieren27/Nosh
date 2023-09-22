@@ -2,7 +2,7 @@ require('dotenv').config();
 const { 
   createRestaurant,
   getAllRestaurants, 
-  getRestaurantsByCategory,
+  getRestaurantsByCuisine,
   getRestaurantsByName,
   getRestaurantById,
   updateRestaurant,
@@ -24,8 +24,8 @@ describe('Database', () => {
   afterAll(async() => {
     await client.query(`
       DELETE FROM restaurants 
-      WHERE name=$1;
-    `, ['Pizza Hut =)']);
+      WHERE address=$1;
+    `, ['123 Smith St']);
     client.end();
   })
 
@@ -85,27 +85,64 @@ describe('Database', () => {
     })
   })
 
-  describe('getRestaurantsByCategory', () => {
-    it('returns an array', async () => {
-      const resByCat = await getRestaurantsByCategory('American');
-      expect(Array.isArray(resByCat)).toBe(true);
+  describe('getRestaurantsByCuisine', () => {
+    it('returns an array containing restaurants by cuisine', async () => {
+      const resByCat = await getRestaurantsByCuisine('Fast Food');
+      expect(resByCat).toEqual([
+        {
+          cuisine: 'Fast Food',
+          name: 'Taco Bell',
+          price: '1',
+          address: '1345 Random St',
+          id: expect.anything(),
+          created_at: expect.anything(),
+          site_link: null
+        },
+        {
+          cuisine: 'Fast Food',
+          name: "Burger King",
+          price: '1',
+          address: '1008 Fast Food Ln',
+          id: expect.anything(),
+          created_at: expect.anything(),
+          site_link: null
+        }
+      ]);
     })
 
   })
 
   describe('getRestaurantsByName', () => {
-    it('returns an array', async () => {
+    it('returns an array containing restaurants by name', async () => {
       const resByName = await getRestaurantsByName('Pizza Hut =)');
-      expect(Array.isArray(resByName)).toBe(true);
+      expect(resByName).toEqual([
+        {
+          name: 'Pizza Hut =)',
+          cuisine: 'American',
+          price: 1,
+          address: '123 Smith St',
+          id: expect.anything(),
+          created_at: expect.anything(),
+          site_link: null
+        }
+      ]);
     })
   })
 
   describe('getRestaurantById', () => {
-    it('returns an object', async () => {
+    it('returns a restaurant object with the correct id', async () => {
       const resById = await getRestaurantById(1);
-      expect(typeof resById === 'object' &&
-        !Array.isArray(resById) &&
-        resById !== null).toBe(true);
+      expect(resById).toMatchObject(
+        {
+          cuisine: 'Fast Food',
+          name: 'Taco Bell',
+          price: '1',
+          address: '1345 Random St',
+          id: 1,
+          created_at: expect.anything(),
+          site_link: null
+        }
+      );
     })
   })
 
@@ -113,20 +150,39 @@ describe('Database', () => {
     it('returns an object', async () => {
       const updatedRes = await updateRestaurant({
         id: 1,
-        name: 'The Pizza Hut =)'
+        name: 'The New Pizza Hut =)'
       });
-      expect(typeof updatedRes === 'object' &&
-        !Array.isArray(updatedRes) &&
-        updatedRes !== null).toBe(true);
+      expect(updatedRes).toMatchObject({
+        name: 'The New Pizza Hut =)',
+        cuisine: 'American',
+        price: 1,
+        address: '123 Smith St',
+        id: expect.anything(),
+        created_at: expect.anything(),
+        site_link: null
+      });
     })
   })
 
   describe('deleteRestaurant', () => {
-    it('returns an object', async () => {
+    it('returns the deleted restaurant', async () => {
       const deletedRes = await deleteRestaurant(1);
-      expect(typeof deletedRes === 'object' &&
-        !Array.isArray(deletedRes) &&
-        deletedRes !== null).toBe(true);
+      expect(deletedRes).toMatchObject({
+        name: expect.anything(),
+        cuisine: 'American',
+        price: 1,
+        address: '123 Smith St',
+        id: 1,
+        created_at: expect.anything(),
+        site_link: null
+      });
     })
+    it('removed the restaurant from the table', async () => {
+      const {rows: [restaurant]} = await client.query(`
+        SELECT * FROM restaurants
+        WHERE address=$1;
+      `, ['123 Smith St']);
+      expect(restaurant).toBe(undefined);
+    });
   })
 })

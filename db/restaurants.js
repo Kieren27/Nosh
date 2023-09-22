@@ -21,7 +21,7 @@ async function getAllRestaurants() {
   return 'fake restaurants';
 }
 
-async function getRestaurantsByCategory() {
+async function getRestaurantsByCuisine() {
   return 'fake restaurants';
 }
 
@@ -44,7 +44,7 @@ async function deleteRestaurant() {
 module.exports = {
   createRestaurant,
   getAllRestaurants,
-  getRestaurantsByCategory,
+  getRestaurantsByCuisine,
   getRestaurantsByName,
   getRestaurantById,
   updateRestaurant,

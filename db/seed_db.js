@@ -1,4 +1,7 @@
 const client = require("./client");
+const {
+  createRestaurant
+} = require('./restaurants');
 
 async function buildTables() {
   try {
@@ -66,12 +69,32 @@ async function buildTables() {
         pending BOOLEAN NOT NULL
       );
     `);
-
-    client.end();
   }
   catch (error) {
     console.error(error);
   }
+}
+
+async function createInitialRestaurants() {
+  console.log('Starting to create restaurants...');
+  await createRestaurant({
+    cuisine: 'Fast Food',
+    name: 'Taco Bell',
+    price: '1',
+    address: '1345 Random St'
+  });
+  await createRestaurant({
+    cuisine: 'Italian',
+    name: "Ca'bianca Ristorante Italiano",
+    price: '3',
+    address: '835 Second St'
+  });
+  await createRestaurant({
+    cuisine: 'Fast Food',
+    name: "Burger King",
+    price: '1',
+    address: '1008 Fast Food Ln'
+  });
 }
 
 // commented out to solve multiple client connect error during tests
@@ -80,5 +103,6 @@ async function buildTables() {
 //   .finally(() => client.end());
 
 module.exports = {
-  buildTables
+  buildTables,
+  createInitialRestaurants
 }
