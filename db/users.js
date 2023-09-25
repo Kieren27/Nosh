@@ -7,7 +7,7 @@ async function createUser({
     email
 }) {
     const SALT_COUNT = 10;
-    const hashedPW = await bcrypt.hash(password, SALT_COUNT)
+    const hashedPassword = await bcrypt.hash(password, SALT_COUNT)
 
     const date = new Date();
     console.log(date);
@@ -15,7 +15,7 @@ async function createUser({
         INSERT INTO users(username, password, email)
         VALUES ($1, $2, $3)
         RETURNING *;
-    `, [username, hashedPW, email]);
+    `, [username, hashedPassword, email]);
 
     delete user.password;
     console.log("user: ", user);
