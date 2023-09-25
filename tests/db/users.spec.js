@@ -12,20 +12,29 @@ const {
     deleteUser
 } = require('../../db/users.js');
 
+let res;
 describe('Database', () => {
     beforeAll(async() => {
       client.connect();
+      res = await createUser({
+        username: 'OmegaBoringUser',
+        password: 'TheMostBoring27',
+        email: 'pinnacleofboring@gmail.com'
+      });
     })
     afterAll(async() => {
       client.end();
     })
 
     describe('createUser', () => {
-        it('returns an object', async () => {
-            const user = await createUser();
-            expect(typeof user === 'object' &&
-            !Array.isArray(user) &&
-            user !== null).toBe(true);
+        it('returns an object containing all the correct keys', async () => {
+            expect(Object.keys(res).sort()).toEqual([
+                'username',
+                'email',
+                'isAdmin',
+                'created_at',
+                'id'
+            ].sort());
         })
     })
 
