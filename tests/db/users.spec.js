@@ -41,6 +41,9 @@ describe('Database', () => {
                 'id'
             ].sort());
         })
+        it('does NOT return the user\'s password', async () => {
+            expect(user.password).toBeFalsy();
+        })
     })
 
     describe('getUser', () => {
