@@ -12,23 +12,28 @@ const {
     deleteUser
 } = require('../../db/users.js');
 
-let res;
+let user;
 describe('Database', () => {
-    beforeAll(async() => {
-      client.connect();
-      res = await createUser({
-        username: 'OmegaBoringUser',
-        password: 'TheMostBoring27',
-        email: 'pinnacleofboring@gmail.com'
-      });
+    beforeAll(async () => {
+        client.connect();
     })
-    afterAll(async() => {
-      client.end();
+    afterAll(async () => {
+        client.end();
     })
 
     describe('createUser', () => {
+        it('returns an object', async () => {
+            user = await createUser({
+                username: 'OmegaBoringUser',
+                password: 'TheMostBoring27',
+                email: 'pinnacleofboring@gmail.com'
+            });
+            expect(typeof user === 'object' &&
+                !Array.isArray(user) &&
+                user !== null).toBe(true);
+        })
         it('returns an object containing all the correct keys', async () => {
-            expect(Object.keys(res).sort()).toEqual([
+            expect(Object.keys(user).sort()).toEqual([
                 'username',
                 'email',
                 'isAdmin',
@@ -42,8 +47,8 @@ describe('Database', () => {
         it('returns an object', async () => {
             const user = await getUser();
             expect(typeof user === 'object' &&
-            !Array.isArray(user) &&
-            user !== null).toBe(true);
+                !Array.isArray(user) &&
+                user !== null).toBe(true);
         })
     })
 
@@ -51,8 +56,8 @@ describe('Database', () => {
         it('returns an array', async () => {
             const AllUsers = await getAllUsers();
             expect(typeof AllUsers === 'object' &&
-            Array.isArray(AllUsers) &&
-            AllUsers !== null).toBe(true);
+                Array.isArray(AllUsers) &&
+                AllUsers !== null).toBe(true);
         })
     })
 
@@ -60,8 +65,8 @@ describe('Database', () => {
         it('returns an object', async () => {
             const user = await getUserById();
             expect(typeof user === 'object' &&
-            !Array.isArray(user) &&
-            user !== null).toBe(true);
+                !Array.isArray(user) &&
+                user !== null).toBe(true);
         })
     })
 
@@ -69,8 +74,8 @@ describe('Database', () => {
         it('returns an object', async () => {
             const user = await getUserByUsername();
             expect(typeof user === 'object' &&
-            !Array.isArray(user) &&
-            user !== null).toBe(true);
+                !Array.isArray(user) &&
+                user !== null).toBe(true);
         })
     })
 
@@ -78,8 +83,8 @@ describe('Database', () => {
         it('returns an object', async () => {
             const user = await getUserByEmail();
             expect(typeof user === 'object' &&
-            !Array.isArray(user) &&
-            user !== null).toBe(true);
+                !Array.isArray(user) &&
+                user !== null).toBe(true);
         })
     })
 
@@ -87,8 +92,8 @@ describe('Database', () => {
         it('returns an object', async () => {
             const user = await updateUser();
             expect(typeof user === 'object' &&
-            !Array.isArray(user) &&
-            user !== null).toBe(true);
+                !Array.isArray(user) &&
+                user !== null).toBe(true);
         })
     })
 
@@ -96,8 +101,8 @@ describe('Database', () => {
         it('returns an object', async () => {
             const user = await deleteUser();
             expect(typeof user === 'object' &&
-            !Array.isArray(user) &&
-            user !== null).toBe(true);
+                !Array.isArray(user) &&
+                user !== null).toBe(true);
         })
     })
 })
