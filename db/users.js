@@ -21,7 +21,7 @@ async function createUser({
 }
 
 async function getUser() {
-    return 'fake user';
+    return 'fakest user';
 }
 
 async function getAllUsers() {
