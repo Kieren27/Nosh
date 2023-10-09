@@ -3,6 +3,10 @@ const {
   createUser
 } = require ('./users');
 
+const {
+  createRestaurant
+} = require('./restaurants');
+
 async function buildTables() {
   try {
     client.connect();
@@ -98,6 +102,28 @@ async function createInitialUsers() {
   console.log('Finished creating users!');
 }
 
+async function createInitialRestaurants() {
+  console.log('Starting to create restaurants...');
+  await createRestaurant({
+    cuisine: 'Fast Food',
+    name: 'Taco Bell',
+    price: '1',
+    address: '1345 Random St'
+  });
+  await createRestaurant({
+    cuisine: 'Italian',
+    name: "Ca'bianca Ristorante Italiano",
+    price: '3',
+    address: '835 Second St'
+  });
+  await createRestaurant({
+    cuisine: 'Fast Food',
+    name: "Burger King",
+    price: '1',
+    address: '1008 Fast Food Ln'
+  });
+}
+
 // commented out to solve multiple client connect error during tests
 // buildTables()
 //   .catch(console.error)
@@ -105,5 +131,6 @@ async function createInitialUsers() {
 
 module.exports = {
   buildTables,
-  createInitialUsers
+  createInitialUsers,
+  createInitialRestaurants
 }
