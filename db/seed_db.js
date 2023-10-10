@@ -1,5 +1,9 @@
 const client = require("./client");
 const {
+  createUser
+} = require ('./users');
+
+const {
   createRestaurant
 } = require('./restaurants');
 
@@ -75,6 +79,29 @@ async function buildTables() {
   }
 }
 
+async function createInitialUsers() {
+  console.log('Starting to create users...');
+  await createUser({
+    username: 'BoringUser1',
+    password: 'ImVeryBoring',
+    email: 'BoringEmail@gmail.com',
+    isAdmin: false
+  });
+  await createUser({
+    username: 'BoringUser2',
+    password: 'ImSuperBoring',
+    email: 'SuperBoringEmail@gmail.com',
+    isAdmin: false
+  });
+  await createUser({
+    username: 'BoringUser3',
+    password: 'ImUltraBoring',
+    email: 'UltraBoringEmail@gmail.com',
+    isAdmin: false
+  });
+  console.log('Finished creating users!');
+}
+
 async function createInitialRestaurants() {
   console.log('Starting to create restaurants...');
   await createRestaurant({
@@ -104,5 +131,6 @@ async function createInitialRestaurants() {
 
 module.exports = {
   buildTables,
+  createInitialUsers,
   createInitialRestaurants
 }
