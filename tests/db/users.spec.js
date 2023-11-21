@@ -77,6 +77,20 @@ describe('Database', () => {
                 Array.isArray(AllUsers) &&
                 AllUsers !== null).toBe(true);
         })
+        it(' returned array contains all user objects', async () => {
+            const AllUsers = await getAllUsers();
+            const { rows: usersTable } = await client.query(`
+            SELECT
+            id,
+            username,
+            email,
+            "isAdmin",
+            created_at
+        FROM
+            users;
+            `)
+            expect(AllUsers).toEqual(usersTable);
+        })
     })
 
     describe('getUserById', () => {

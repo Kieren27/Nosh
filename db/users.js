@@ -35,7 +35,23 @@ async function getUser({username, password}) {
 }
 
 async function getAllUsers() {
-    return 'fake users';
+    try {
+        const { rows: allUsers } = await client.query(`
+        SELECT
+            id,
+            username,
+            email,
+            "isAdmin",
+            created_at
+        FROM
+            users;
+    `)
+
+    console.log('All Users: ', allUsers);
+    return allUsers;
+    } catch (error) {
+        throw new Error(`There was an error while fetching users: ${error}`)
+    }
 }
 
 async function getUserById() {
