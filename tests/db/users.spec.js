@@ -48,10 +48,25 @@ describe('Database', () => {
 
     describe('getUser', () => {
         it('returns an object', async () => {
-            const user = await getUser();
+            const user = await getUser({
+                username: 'BoringUser1',
+                password: 'ImVeryBoring'
+            });
             expect(typeof user === 'object' &&
                 !Array.isArray(user) &&
                 user !== null).toBe(true);
+        })
+        it('returns an object containing all the correct keys', async () => {
+            expect(Object.keys(user).sort()).toEqual([
+                'username',
+                'email',
+                'isAdmin',
+                'created_at',
+                'id'
+            ].sort());
+        })
+        it('does NOT return the user\'s password', async () => {
+            expect(user.password).toBeFalsy();
         })
     })
 

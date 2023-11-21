@@ -20,8 +20,18 @@ async function createUser({
     return user;
 }
 
-async function getUser() {
-    return 'fake user';
+async function getUser({username, password}) {
+    const user = await getUserByUsername(username);
+    const hashedPassword = user.password;
+    const isValid = await bcrypt.compare(password, hashedPassword);
+
+    if (isValid) {
+        delete user.password;
+        console.log("valid user: ", user);
+        return user;
+    } else {
+        throw new Error("Username or password is incorrect");
+    }
 }
 
 async function getAllUsers() {
@@ -32,8 +42,14 @@ async function getUserById() {
     return 'fake user';
 }
 
-async function getUserByUsername() {
-    return 'fake user';
+async function getUserByUsername(username) {
+    const { rows: [user] } = await client.query(`
+    SELECT *
+    FROM users
+    WHERE username = $1;
+  `, [username]);
+
+  return user;
 }
 
 async function getUserByEmail() {
