@@ -76,6 +76,7 @@ async function getUserByUsername(username) {
     WHERE username = $1;
   `, [username]);
 
+  console.log("userByUsername: ", user);
   return user;
 }
 

@@ -116,10 +116,23 @@ describe('Database', () => {
 
     describe('getUserByUsername', () => {
         it('returns an object', async () => {
-            const user = await getUserByUsername();
-            expect(typeof user === 'object' &&
-                !Array.isArray(user) &&
-                user !== null).toBe(true);
+            const userByUsername = await getUserByUsername('BoringUser3');
+            expect(typeof userByUsername === 'object' &&
+                !Array.isArray(userByUsername) &&
+                userByUsername !== null).toBe(true);
+        })
+        it('object contains the correct keys', async () => {
+            const userByUsername = await getUserByUsername('BoringUser3');
+            expect(userByUsername).toMatchObject(
+                {
+                    username: 'BoringUser3',
+                    email: 'UltraBoringEmail@gmail.com',
+                    isAdmin: expect.anything(),
+                    created_at: expect.anything(),
+                    id: expect.anything()
+                }
+            )
+
         })
     })
 
