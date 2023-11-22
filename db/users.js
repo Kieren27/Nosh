@@ -54,8 +54,19 @@ async function getAllUsers() {
     }
 }
 
-async function getUserById() {
-    return 'fake user';
+async function getUserById(userId) {
+    try {
+        const { rows: [user] } = await client.query(`
+    SELECT * FROM users
+    WHERE id=$1
+    `, [userId])
+
+    delete user.password;
+    console.log("getUserById: ", user);
+    return user;
+    } catch (error) {
+        throw new Error("No users were found with that ID")
+    }
 }
 
 async function getUserByUsername(username) {
