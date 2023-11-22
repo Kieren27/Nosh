@@ -138,10 +138,22 @@ describe('Database', () => {
 
     describe('getUserByEmail', () => {
         it('returns an object', async () => {
-            const user = await getUserByEmail();
-            expect(typeof user === 'object' &&
-                !Array.isArray(user) &&
-                user !== null).toBe(true);
+            const userByEmail = await getUserByEmail('pinnacleofboring@gmail.com');
+            expect(typeof userByEmail === 'object' &&
+                !Array.isArray(userByEmail) &&
+                userByEmail !== null).toBe(true);
+        })
+        it('returns the correct keys', async () => {
+            const userByEmail = await getUserByEmail('pinnacleofboring@gmail.com');
+            expect(userByEmail).toMatchObject(
+                {
+                    username: 'OmegaBoringUser',
+                    email: 'pinnacleofboring@gmail.com',
+                    isAdmin: expect.anything(),
+                    created_at: expect.anything(),
+                    id: expect.anything()
+                }
+            )
         })
     })
 

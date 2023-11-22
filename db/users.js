@@ -21,7 +21,11 @@ async function createUser({
 }
 
 async function getUser({username, password}) {
-    const user = await getUserByUsername(username);
+    const {rows: [user] } = await client.query(`
+        SELECT * FROM users
+        WHERE username = $1;
+    `, [username]);
+
     const hashedPassword = user.password;
     const isValid = await bcrypt.compare(password, hashedPassword);
 
@@ -76,12 +80,20 @@ async function getUserByUsername(username) {
     WHERE username = $1;
   `, [username]);
 
+  delete user.password;
   console.log("userByUsername: ", user);
   return user;
 }
 
-async function getUserByEmail() {
-    return 'fake user';
+async function getUserByEmail(email) {
+    const { rows: [user] } = await client.query(`
+    SELECT * FROM users
+    WHERE email = $1;
+    `, [email]);
+
+    delete user.password;
+    console.log("userByEmail: ", user);
+    return user;
 }
 
 async function updateUser() {
