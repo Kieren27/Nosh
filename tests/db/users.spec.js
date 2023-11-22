@@ -77,7 +77,7 @@ describe('Database', () => {
                 Array.isArray(AllUsers) &&
                 AllUsers !== null).toBe(true);
         })
-        it(' returned array contains all user objects', async () => {
+        it('returned array contains all user objects (excludes password from client query)', async () => {
             const AllUsers = await getAllUsers();
             const { rows: usersTable } = await client.query(`
             SELECT
