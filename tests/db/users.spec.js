@@ -174,11 +174,22 @@ describe('Database', () => {
     })
 
     describe('deleteUser', () => {
-        it('returns an object', async () => {
-            const user = await deleteUser();
-            expect(typeof user === 'object' &&
-                !Array.isArray(user) &&
-                user !== null).toBe(true);
-        })
+        it('returns the deleted object', async () => {
+            const deletedUser = await deleteUser(4);
+            expect(deletedUser).toMatchObject({
+                username: 'InterestingUser :)',
+                email: 'pinnacleofboring@gmail.com',
+                isAdmin: expect.anything(),
+                created_at: expect.anything(),
+                id: 4
+            });
+        });
+        it('removed the user from the users table', async () => {
+            const { rows: [user] } = await client.query(`
+                SELECT * FROM users
+                WHERE username=$1;
+            `, ['InterestingUser :)']);
+            expect(user).toBe(undefined);
+        });
     })
 })
