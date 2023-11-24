@@ -158,11 +158,18 @@ describe('Database', () => {
     })
 
     describe('updateUser', () => {
-        it('returns an object', async () => {
-            const user = await updateUser();
-            expect(typeof user === 'object' &&
-                !Array.isArray(user) &&
-                user !== null).toBe(true);
+        it('returns the correct updated object', async () => {
+            const updatedUser = await updateUser({
+                id: 4,
+                username: 'InterestingUser :)'
+            });
+            expect(updatedUser).toMatchObject({
+                username: 'InterestingUser :)',
+                email: 'pinnacleofboring@gmail.com',
+                isAdmin: expect.anything(),
+                created_at: expect.anything(),
+                id: expect.anything()
+            });
         })
     })
 
