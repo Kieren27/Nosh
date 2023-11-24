@@ -171,6 +171,13 @@ describe('Database', () => {
                 id: expect.anything()
             });
         })
+        it('updated the correct data in the users table', async () => {
+            const { rows: [user] } = await client.query(`
+                SELECT * FROM users
+                WHERE username=$1;
+            `, ['InterestingUser :)']);
+            expect(user).toBe('InterestingUser :)');
+        })
     })
 
     describe('deleteUser', () => {
