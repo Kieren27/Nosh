@@ -124,8 +124,22 @@ async function updateUser(id, fields = {}) {
     }
 }
 
-async function deleteUser() {
-    return 'fake user';
+async function deleteUser(userId) {
+    try {
+        const { rows: [user] } = await client.query(`
+        DELETE FROM 
+            users
+        WHERE
+            id=$1
+        RETURNING *;
+        `, [userId]);
+
+        delete user.password;
+        console.log("deleted user: ", user);
+        return user;
+    } catch (error) {
+        throw new Error(`There was an error deleting this user ${error}`);
+    }
 }
 
 module.exports = {
