@@ -159,12 +159,11 @@ describe('Database', () => {
 
     describe('updateUser', () => {
         it('returns the correct updated object', async () => {
-            const updatedUser = await updateUser({
-                id: 4,
-                username: 'InterestingUser :)'
+            const updatedUser = await updateUser(4, {
+                username: "InterestingUser :)"
             });
             expect(updatedUser).toMatchObject({
-                username: 'InterestingUser :)',
+                username: "InterestingUser :)",
                 email: 'pinnacleofboring@gmail.com',
                 isAdmin: expect.anything(),
                 created_at: expect.anything(),
@@ -175,8 +174,8 @@ describe('Database', () => {
             const { rows: [user] } = await client.query(`
                 SELECT * FROM users
                 WHERE username=$1;
-            `, ['InterestingUser :)']);
-            expect(user).toBe('InterestingUser :)');
+            `, ["InterestingUser :)"]);
+            expect(user.username).toBe("InterestingUser :)");
         })
     })
 
