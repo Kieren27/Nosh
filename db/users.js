@@ -96,8 +96,32 @@ async function getUserByEmail(email) {
     return user;
 }
 
-async function updateUser() {
-    return 'fake user';
+async function updateUser(id, fields = {}) {
+    const setString = Object.keys(fields).map(
+        (key, index) => `"${key}"=$${index + 1}`
+    ).join(', ');
+
+    if (setString.length === 0) {
+        return;
+    }
+
+    try {
+        const { rows: [user] } = await client.query(`
+        UPDATE
+            users
+        SET
+            ${setString}
+        WHERE
+            id=${id}
+        RETURNING *;
+    `, Object.values(fields));
+
+    delete user.password;
+    console.log('updated user: ', user);
+    return user;
+    } catch (error) {
+        throw new Error(`There was an error updating this user ${error}`);
+    }
 }
 
 async function deleteUser() {
