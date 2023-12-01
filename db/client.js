@@ -2,7 +2,7 @@ const { Client } = require('pg');
 
 const DB_NAME = 'nosh-backend';
 
-const DB_URL = process.env.DATABASE_URL;
+const DB_URL = process.env.DATABASE_URL || `https://localhost:5432/${DB_NAME}`;
 
 let client;
 
