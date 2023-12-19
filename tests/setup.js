@@ -1,7 +1,8 @@
 const { 
   buildTables,
   createInitialRestaurants,
-  createInitialUsers
+  createInitialUsers,
+  createInitialReviews
 } = require("../db/seed_db");
 
 const setup = async () => {
@@ -9,6 +10,7 @@ const setup = async () => {
   await buildTables();
   await createInitialUsers();
   await createInitialRestaurants();
+  await createInitialReviews();
 }
 
 module.exports = setup;
