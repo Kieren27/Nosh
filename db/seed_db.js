@@ -7,6 +7,10 @@ const {
   createRestaurant
 } = require('./restaurants');
 
+const {
+  createReview
+} = require('./reviews');
+
 async function buildTables() {
   try {
     client.connect();
@@ -52,9 +56,9 @@ async function buildTables() {
         id SERIAL PRIMARY KEY,
         "userId" INTEGER REFERENCES users(id),
         "restaurantId" INTEGER REFERENCES restaurants(id),
-        review TEXT NOT NULL,
+        text TEXT NOT NULL,
         rating INTEGER NOT NULL CHECK (rating > 0 AND rating < 6),
-        date_created DATE NOT NULL
+        created_at timestamptz NOT NULL DEFAULT now()
       );
 
       CREATE TABLE comments(
@@ -122,6 +126,30 @@ async function createInitialRestaurants() {
     price: '1',
     address: '1008 Fast Food Ln'
   });
+  console.log('Finished creating restaurants!');
+}
+
+async function createInitialReviews() {
+  console.log('Starting to create reviews...');
+  await createReview({
+    userId: 1,
+    restaurantId: 1,
+    text: 'Ehh... its taco bell.',
+    rating: 2
+  });
+  await createReview({
+    userId: 2,
+    restaurantId: 2,
+    text: 'This place is amazing!',
+    rating: 5
+  });
+  await createReview({
+    userId: 1,
+    restaurantId: 3,
+    text: 'The food is terrible.',
+    rating: 1
+  });
+  console.log('Finished creating reviews!');
 }
 
 // commented out to solve multiple client connect error during tests
@@ -132,5 +160,6 @@ async function createInitialRestaurants() {
 module.exports = {
   buildTables,
   createInitialUsers,
-  createInitialRestaurants
+  createInitialRestaurants,
+  createInitialReviews
 }
